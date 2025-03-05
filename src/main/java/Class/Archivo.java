@@ -4,19 +4,23 @@
  */
 package Class;
 
+import java.util.Date;
+
 /**
  *
  * @author andre
  */
 public class Archivo {
-     private String name;
+    private String name;
+    private Date creationDate; 
     private int size; // Tamaño en bloques
     private Bloque firstBlock; // Primer bloque de la cadena
 
     // Constructor
-    public Archivo(String name, int size) {
+    public Archivo(String name, int size, Date date) {
         this.name = name;
         this.size = size;
+        this.creationDate = date;
         this.firstBlock = null;
     }
 
@@ -43,6 +47,14 @@ public class Archivo {
     
     public void setSize(int newSize){
         this.size = newSize;
+    }
+    
+    public Date getDate(){
+        return creationDate;
+    }
+    
+    public void setDate(Date nDate){
+        this.creationDate = nDate;
     }
     
 }
