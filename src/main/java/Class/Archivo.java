@@ -10,7 +10,7 @@ package Class;
  */
 public class Archivo {
      private String name;
-    private int size; // Tamaño en bytes
+    private int size; // Tamaño en bloques
     private Bloque firstBlock; // Primer bloque de la cadena
 
     // Constructor

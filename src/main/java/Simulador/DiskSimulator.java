@@ -17,20 +17,18 @@ public class DiskSimulator {
     private int blockSize; // Tamaño de cada bloque en bytes
 
     // Constructor
-    public DiskSimulator(int totalBlocks, int blockSize) {
+    public DiskSimulator(int totalBlocks) {
         this.totalBlocks = totalBlocks;
-        this.blockSize = blockSize;
         this.blocks = new Bloque[totalBlocks];
         // Inicializar bloques
         for (int i = 0; i < totalBlocks; i++) {
-            blocks[i] = new Bloque(i, blockSize);
+            blocks[i] = new Bloque(i);
         }
     }
 
     // Método para asignar bloques a un archivo
     public boolean allocateFile(Archivo file) {
-        int fileSize = file.getSize();
-        int blocksNeeded = (int) Math.ceil((double) fileSize / blockSize); // Bloques necesarios
+        int blocksNeeded = file.getSize();
         Lista<Bloque> freeBlocks = new Lista<>();
 
         // Buscar bloques libres
@@ -66,7 +64,6 @@ public class DiskSimulator {
         Bloque currentBlock = file.getFirstBlock();
         while (currentBlock != null) {
             currentBlock.setFree(true); // Marcar como libre
-            currentBlock.setData(new byte[blockSize]); // Limpiar datos
             currentBlock = currentBlock.getNextBlock();
         }
         file.setFirstBlock(null); // Eliminar referencia al primer bloque
