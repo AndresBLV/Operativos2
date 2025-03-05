@@ -17,6 +17,7 @@ public class Archivo {
     private Bloque firstBlock; // Primer bloque de la cadena
 
     // Constructor
+    public Archivo(){}
     public Archivo(String name, int size) {
         this.name = name;
         this.size = size;

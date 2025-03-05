@@ -14,6 +14,7 @@ public class Bloque {
     private Bloque nextBlock; // Puntero al siguiente bloque en la cadena
     
     // Constructor
+    public Bloque(){}
     public Bloque(int id) {
         this.id = id;
         this.isFree = true; // Por defecto, el bloque está libre

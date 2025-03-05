@@ -17,6 +17,7 @@ public class DiskSimulator {
     private int blockSize; // Tamaño de cada bloque en bytes
 
     // Constructor
+    public DiskSimulator(){}
     public DiskSimulator(int totalBlocks) {
         this.totalBlocks = totalBlocks;
         this.blocks = new Bloque[totalBlocks];

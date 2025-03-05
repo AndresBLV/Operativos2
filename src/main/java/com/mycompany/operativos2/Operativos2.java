@@ -16,7 +16,19 @@ public class Operativos2 {
         
         Archivo file = new Archivo("documento.txt",3);
         
+        Archivo file2 = new Archivo("documento.txt",4);
+        
+        Archivo file3 = new Archivo("documento.txt",4);
+        
         if (disk.allocateFile(file)){
+            System.out.println("Archivo asignado correctamente");
+        }else{
+            System.out.println("No hay suficientes bloques libres");
+        }
+        
+        disk.displayDiskStatus();
+        
+        if (disk.allocateFile(file2)){
             System.out.println("Archivo asignado correctamente");
         }else{
             System.out.println("No hay suficientes bloques libres");
@@ -26,6 +38,14 @@ public class Operativos2 {
         
         disk.freeFile(file);
         System.out.println("Bloques liberados");
+        
+        disk.displayDiskStatus();
+        
+        if (disk.allocateFile(file3)){
+            System.out.println("Archivo asignado correctamente");
+        }else{
+            System.out.println("No hay suficientes bloques libres");
+        }
         
         disk.displayDiskStatus();
     }
