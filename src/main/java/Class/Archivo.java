@@ -17,10 +17,9 @@ public class Archivo {
     private Bloque firstBlock; // Primer bloque de la cadena
 
     // Constructor
-    public Archivo(String name, int size, Date date) {
+    public Archivo(String name, int size) {
         this.name = name;
         this.size = size;
-        this.creationDate = date;
         this.firstBlock = null;
     }
 
