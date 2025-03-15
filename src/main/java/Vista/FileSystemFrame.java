@@ -170,7 +170,6 @@ public class FileSystemFrame extends JFrame {
                 }
                 
                 FSNode fsNode = (FSNode) selectedNode.getUserObject();
-                System.out.println(fsNode);
                 if (!fsNode.isDirectory()) {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "No se puede crear un archivo dentro de un archivo",
@@ -453,58 +452,110 @@ public class FileSystemFrame extends JFrame {
                 }
                 
                 // Obtener el directorio padre para verificar duplicados
-                DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) selectedNode.getParent();
-                FSNode parentFSNode = (FSNode) parentNode.getUserObject();
-                Directorio parentDir = (Directorio) parentFSNode.getNode();
+                DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) selectedNode.getParent();                
+                FSNode parentFSNode = (FSNode) parentNode.getUserObject();              
                 
-                // Verificar duplicados en archivos
-                Lista<Archivo> archivos = parentDir.getArchivos();
-                for (int i = 0; i < archivos.getTamaño(); i++) {
-                    Archivo archivo = archivos.obtener(i);
-                    if (!archivo.getName().equals(fsNode.getName()) && archivo.getName().equals(newName)) {
-                        JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                                "Ya existe un archivo con ese nombre",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
+                if (fileSystem.getRootDirectory().getNmae() == parentFSNode.toString()){
+                    Directorio parentDir = fileSystem.getRootDirectory();
+                    // Verificar duplicados en archivos
+                    Lista<Archivo> archivos = parentDir.getArchivos();
+                    for (int i = 0; i < archivos.getTamaño(); i++) {
+                        Archivo archivo = archivos.obtener(i);
+                        if (!archivo.getName().equals(fsNode.getName()) && archivo.getName().equals(newName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un archivo con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     }
-                }
-                
-                // Verificar duplicados en directorios
-                Lista<Directorio> subdirectorios = parentDir.getSubdirectorios();
-                for (int i = 0; i < subdirectorios.getTamaño(); i++) {
-                    Directorio dir = subdirectorios.obtener(i);
-                    if (!dir.getNmae().equals(fsNode.getName()) && dir.getNmae().equals(newName)) {
-                        JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                                "Ya existe un directorio con ese nombre",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
+
+                    // Verificar duplicados en directorios
+                    Lista<Directorio> subdirectorios = parentDir.getSubdirectorios();
+                    for (int i = 0; i < subdirectorios.getTamaño(); i++) {
+                        Directorio dir = subdirectorios.obtener(i);
+                        if (!dir.getNmae().equals(fsNode.getName()) && dir.getNmae().equals(newName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un directorio con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     }
+
+                    // Renombrar el nodo
+                    if (fsNode.isDirectory()) {
+                        Directorio dir = (Directorio) fsNode.getNode();
+                        dir.setName(newName);
+                    } else {
+                        Archivo archivo = (Archivo) fsNode.getNode();
+
+                        // Guardar el color antes de renombrar
+                        String oldPath = getFilePath(archivo, parentDir);
+                        Color fileColor = fileColorMap.get(oldPath);
+                        fileColorMap.remove(oldPath);
+
+                        archivo.setName(newName);
+
+                        // Asignar el color al nuevo path
+                        fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
+                    }
+
+                    fsNode.setName(newName);
+                    treeModel.nodeChanged(selectedNode);
+                    updateUI();
+
+                    // Guardar el estado del sistema
+                    saveSystemState();
+                }else{
+                    Directorio parentDir = (Directorio) parentFSNode.getNode();
+                    // Verificar duplicados en archivos
+                    Lista<Archivo> archivos = parentDir.getArchivos();
+                    for (int i = 0; i < archivos.getTamaño(); i++) {
+                        Archivo archivo = archivos.obtener(i);
+                        if (!archivo.getName().equals(fsNode.getName()) && archivo.getName().equals(newName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un archivo con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    // Verificar duplicados en directorios
+                    Lista<Directorio> subdirectorios = parentDir.getSubdirectorios();
+                    for (int i = 0; i < subdirectorios.getTamaño(); i++) {
+                        Directorio dir = subdirectorios.obtener(i);
+                        if (!dir.getNmae().equals(fsNode.getName()) && dir.getNmae().equals(newName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un directorio con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    // Renombrar el nodo
+                    if (fsNode.isDirectory()) {
+                        Directorio dir = (Directorio) fsNode.getNode();
+                        dir.setName(newName);
+                    } else {
+                        Archivo archivo = (Archivo) fsNode.getNode();
+
+                        // Guardar el color antes de renombrar
+                        String oldPath = getFilePath(archivo, parentDir);
+                        Color fileColor = fileColorMap.get(oldPath);
+                        fileColorMap.remove(oldPath);
+
+                        archivo.setName(newName);
+
+                        // Asignar el color al nuevo path
+                        fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
+                    }
+
+                    fsNode.setName(newName);
+                    treeModel.nodeChanged(selectedNode);
+                    updateUI();
+
+                    // Guardar el estado del sistema
+                    saveSystemState();
                 }
-                
-                // Renombrar el nodo
-                if (fsNode.isDirectory()) {
-                    Directorio dir = (Directorio) fsNode.getNode();
-                    dir.setName(newName);
-                } else {
-                    Archivo archivo = (Archivo) fsNode.getNode();
-                    
-                    // Guardar el color antes de renombrar
-                    String oldPath = getFilePath(archivo, parentDir);
-                    Color fileColor = fileColorMap.get(oldPath);
-                    fileColorMap.remove(oldPath);
-                    
-                    archivo.setName(newName);
-                    
-                    // Asignar el color al nuevo path
-                    fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
-                }
-                
-                fsNode.setName(newName);
-                treeModel.nodeChanged(selectedNode);
-                updateUI();
-                
-                // Guardar el estado del sistema
-                saveSystemState();
             }
         });
         
