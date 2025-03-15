@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class FileSystemFrame extends JFrame {
-    
+      
     private JTree fileTree;
     private DefaultTreeModel treeModel;
     private DefaultMutableTreeNode rootNode;
@@ -104,6 +104,7 @@ public class FileSystemFrame extends JFrame {
         controlPanel.add(userMode);
         
         // Panel izquierdo - JTree
+        
         rootNode = new DefaultMutableTreeNode(new FSNode("root", true, null));
         treeModel = new DefaultTreeModel(rootNode);
         fileTree = new JTree(treeModel);
@@ -169,6 +170,7 @@ public class FileSystemFrame extends JFrame {
                 }
                 
                 FSNode fsNode = (FSNode) selectedNode.getUserObject();
+                System.out.println(fsNode);
                 if (!fsNode.isDirectory()) {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "No se puede crear un archivo dentro de un archivo",
@@ -183,70 +185,138 @@ public class FileSystemFrame extends JFrame {
                 }
                 
                 // Verificar si ya existe un archivo con ese nombre
-                Directorio directorio = (Directorio) fsNode.getNode();
-                Lista<Archivo> archivos = directorio.getArchivos();
-                for (int i = 0; i < archivos.getTamaño(); i++) {
-                    if (archivos.obtener(i).getName().equals(fileName)) {
+                if (fileSystem.getRootDirectory().getNmae() == fsNode.toString()){
+                    Directorio directorio = fileSystem.getRootDirectory();
+                    Lista<Archivo> archivos = directorio.getArchivos();
+                    for (int i = 0; i < archivos.getTamaño(); i++) {
+                        if (archivos.obtener(i).getName().equals(fileName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un archivo con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    // Verificar subdirectorios también
+                    Lista<Directorio> subdirectorios = directorio.getSubdirectorios();
+                    for (int i = 0; i < subdirectorios.getTamaño(); i++) {
+                        if (subdirectorios.obtener(i).getNmae().equals(fileName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un directorio con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    int fileSize = 0;
+                    try {
+                        String sizeStr = JOptionPane.showInputDialog(FileSystemFrame.this, 
+                                "Ingrese el tamaño del archivo en bloques:");
+                        if (sizeStr == null) {
+                            return;
+                        }
+                        fileSize = Integer.parseInt(sizeStr);
+                        if (fileSize <= 0) {
+                            throw new NumberFormatException();
+                        }
+                    } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                                "Ya existe un archivo con ese nombre",
+                                "Por favor ingrese un número entero positivo",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                }
-                
-                // Verificar subdirectorios también
-                Lista<Directorio> subdirectorios = directorio.getSubdirectorios();
-                for (int i = 0; i < subdirectorios.getTamaño(); i++) {
-                    if (subdirectorios.obtener(i).getNmae().equals(fileName)) {
+
+                    // Verificar si hay suficiente espacio
+                    if (fileSize > fileSystem.getAvailableBlocks()) {
                         JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                                "Ya existe un directorio con ese nombre",
+                                "No hay suficiente espacio en disco. Disponible: " 
+                                        + fileSystem.getAvailableBlocks() + " bloques",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                }
-                
-                int fileSize = 0;
-                try {
-                    String sizeStr = JOptionPane.showInputDialog(FileSystemFrame.this, 
-                            "Ingrese el tamaño del archivo en bloques:");
-                    if (sizeStr == null) {
+
+                    // Crear el archivo
+                    Archivo archivo = fileSystem.createFile(fileName, fileSize, directorio);
+                    if (archivo != null) {
+                        // Asignar un color aleatorio al archivo
+                        Color fileColor = FILE_COLORS[random.nextInt(FILE_COLORS.length)];
+                        fileColorMap.put(getFilePath(archivo, directorio), fileColor);
+
+                        FSNode newFileNode = new FSNode(fileName, false, archivo);
+                        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(newFileNode);
+                        selectedNode.add(newNode);
+                        treeModel.nodesWereInserted(selectedNode, new int[]{selectedNode.getChildCount() - 1});
+                        updateUI();
+
+                        // Guardar el estado del sistema
+                        saveSystemState();
+                    } 
+                }else{
+                    Directorio directorio = (Directorio) fsNode.getNode();
+                    Lista<Archivo> archivos = directorio.getArchivos();
+                    for (int i = 0; i < archivos.getTamaño(); i++) {
+                        if (archivos.obtener(i).getName().equals(fileName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un archivo con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    // Verificar subdirectorios también
+                    Lista<Directorio> subdirectorios = directorio.getSubdirectorios();
+                    for (int i = 0; i < subdirectorios.getTamaño(); i++) {
+                        if (subdirectorios.obtener(i).getNmae().equals(fileName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un directorio con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    int fileSize = 0;
+                    try {
+                        String sizeStr = JOptionPane.showInputDialog(FileSystemFrame.this, 
+                                "Ingrese el tamaño del archivo en bloques:");
+                        if (sizeStr == null) {
+                            return;
+                        }
+                        fileSize = Integer.parseInt(sizeStr);
+                        if (fileSize <= 0) {
+                            throw new NumberFormatException();
+                        }
+                    } catch (NumberFormatException ex) {    
+                        JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                "Por favor ingrese un número entero positivo",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    fileSize = Integer.parseInt(sizeStr);
-                    if (fileSize <= 0) {
-                        throw new NumberFormatException();
+
+                    // Verificar si hay suficiente espacio
+                    if (fileSize > fileSystem.getAvailableBlocks()) {
+                        JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                "No hay suficiente espacio en disco. Disponible: " 
+                                        + fileSystem.getAvailableBlocks() + " bloques",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                            "Por favor ingrese un número entero positivo",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                // Verificar si hay suficiente espacio
-                if (fileSize > fileSystem.getAvailableBlocks()) {
-                    JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                            "No hay suficiente espacio en disco. Disponible: " 
-                                    + fileSystem.getAvailableBlocks() + " bloques",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                // Crear el archivo
-                Archivo archivo = fileSystem.createFile(fileName, fileSize, directorio);
-                if (archivo != null) {
-                    // Asignar un color aleatorio al archivo
-                    Color fileColor = FILE_COLORS[random.nextInt(FILE_COLORS.length)];
-                    fileColorMap.put(getFilePath(archivo, directorio), fileColor);
-                    
-                    FSNode newFileNode = new FSNode(fileName, false, archivo);
-                    DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(newFileNode);
-                    selectedNode.add(newNode);
-                    treeModel.nodesWereInserted(selectedNode, new int[]{selectedNode.getChildCount() - 1});
-                    updateUI();
-                    
-                    // Guardar el estado del sistema
-                    saveSystemState();
+
+                    // Crear el archivo
+                    Archivo archivo = fileSystem.createFile(fileName, fileSize, directorio);
+                    if (archivo != null) {
+                        // Asignar un color aleatorio al archivo
+                        Color fileColor = FILE_COLORS[random.nextInt(FILE_COLORS.length)];
+                        fileColorMap.put(getFilePath(archivo, directorio), fileColor);
+
+                        FSNode newFileNode = new FSNode(fileName, false, archivo);
+                        DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(newFileNode);
+                        selectedNode.add(newNode);
+                        treeModel.nodesWereInserted(selectedNode, new int[]{selectedNode.getChildCount() - 1});
+                        updateUI();
+
+                        // Guardar el estado del sistema
+                        saveSystemState();
+                    }
                 }
             }
         });
@@ -283,40 +353,77 @@ public class FileSystemFrame extends JFrame {
                     return;
                 }
                 
-                // Verificar si ya existe un directorio con ese nombre
-                Directorio parentDir = (Directorio) fsNode.getNode();
-                Lista<Directorio> subdirectorios = parentDir.getSubdirectorios();
-                for (int i = 0; i < subdirectorios.getTamaño(); i++) {
-                    if (subdirectorios.obtener(i).getNmae().equals(dirName)) {
-                        JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                                "Ya existe un directorio con ese nombre",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
+                if (fileSystem.getRootDirectory().getNmae() == fsNode.toString()){
+                    // Verificar si ya existe un directorio con ese nombre
+                    Directorio parentDir = fileSystem.getRootDirectory();
+                    Lista<Directorio> subdirectorios = parentDir.getSubdirectorios();
+                    for (int i = 0; i < subdirectorios.getTamaño(); i++) {
+                        if (subdirectorios.obtener(i).getNmae().equals(dirName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un directorio con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     }
-                }
-                
-                // Verificar archivos también
-                Lista<Archivo> archivos = parentDir.getArchivos();
-                for (int i = 0; i < archivos.getTamaño(); i++) {
-                    if (archivos.obtener(i).getName().equals(dirName)) {
-                        JOptionPane.showMessageDialog(FileSystemFrame.this, 
-                                "Ya existe un archivo con ese nombre",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
+
+                    // Verificar archivos también
+                    Lista<Archivo> archivos = parentDir.getArchivos();
+                    for (int i = 0; i < archivos.getTamaño(); i++) {
+                        if (archivos.obtener(i).getName().equals(dirName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un archivo con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     }
+
+                    // Crear el directorio
+                    Directorio newDir = fileSystem.createDirectory(dirName, parentDir);
+
+                    FSNode newDirNode = new FSNode(dirName, true, newDir);
+                    DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(newDirNode);
+                    selectedNode.add(newNode);
+                    treeModel.nodesWereInserted(selectedNode, new int[]{selectedNode.getChildCount() - 1});
+                    updateUI();
+
+                    // Guardar el estado del sistema
+                    saveSystemState();
+                }else{
+                    // Verificar si ya existe un directorio con ese nombre
+                    Directorio parentDir = (Directorio) fsNode.getNode();
+                    Lista<Directorio> subdirectorios = parentDir.getSubdirectorios();
+                    for (int i = 0; i < subdirectorios.getTamaño(); i++) {
+                        if (subdirectorios.obtener(i).getNmae().equals(dirName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un directorio con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    // Verificar archivos también
+                    Lista<Archivo> archivos = parentDir.getArchivos();
+                    for (int i = 0; i < archivos.getTamaño(); i++) {
+                        if (archivos.obtener(i).getName().equals(dirName)) {
+                            JOptionPane.showMessageDialog(FileSystemFrame.this, 
+                                    "Ya existe un archivo con ese nombre",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+
+                    // Crear el directorio
+                    Directorio newDir = fileSystem.createDirectory(dirName, parentDir);
+
+                    FSNode newDirNode = new FSNode(dirName, true, newDir);
+                    DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(newDirNode);
+                    selectedNode.add(newNode);
+                    treeModel.nodesWereInserted(selectedNode, new int[]{selectedNode.getChildCount() - 1});
+                    updateUI();
+
+                    // Guardar el estado del sistema
+                    saveSystemState();
                 }
-                
-                // Crear el directorio
-                Directorio newDir = fileSystem.createDirectory(dirName, parentDir);
-                
-                FSNode newDirNode = new FSNode(dirName, true, newDir);
-                DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(newDirNode);
-                selectedNode.add(newNode);
-                treeModel.nodesWereInserted(selectedNode, new int[]{selectedNode.getChildCount() - 1});
-                updateUI();
-                
-                // Guardar el estado del sistema
-                saveSystemState();
             }
         });
         

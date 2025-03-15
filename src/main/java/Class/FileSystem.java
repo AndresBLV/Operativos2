@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Indatech
  */
 public class FileSystem {
-     private int totalBlocks;
+    private int totalBlocks;
     private Bloque[] bloques;
     private Directorio rootDirectory;
     private Lista<ArchivoInfo> allFilesInfo;
