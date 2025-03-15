@@ -586,25 +586,47 @@ public class FileSystemFrame extends JFrame {
                     // Obtener el padre para eliminar la referencia
                     DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) selectedNode.getParent();
                     FSNode parentFSNode = (FSNode) parentNode.getUserObject();
-                    Directorio parentDir = (Directorio) parentFSNode.getNode();
                     
-                    // Eliminar del sistema de archivos
-                    if (fsNode.isDirectory()) {
-                        // Si es un directorio, eliminamos recursivamente
-                        fileSystem.deleteDirectory((Directorio)fsNode.getNode(), parentDir);
-                    } else {
-                        // Si es un archivo, lo eliminamos directamente
-                        Archivo archivo = (Archivo) fsNode.getNode();
-                        fileSystem.deleteFile(archivo, parentDir);
-                        fileColorMap.remove(getFilePath(archivo, parentDir));
+                    if (fileSystem.getRootDirectory().getNmae() == parentFSNode.toString()){
+                        Directorio parentDir = fileSystem.getRootDirectory();
+                        // Eliminar del sistema de archivos
+                        if (fsNode.isDirectory()) {
+                            // Si es un directorio, eliminamos recursivamente
+                            fileSystem.deleteDirectory((Directorio)fsNode.getNode(), parentDir);
+                        } else {
+                            // Si es un archivo, lo eliminamos directamente
+                            Archivo archivo = (Archivo) fsNode.getNode();
+                            fileSystem.deleteFile(archivo, parentDir);
+                            fileColorMap.remove(getFilePath(archivo, parentDir));
+                        }
+
+                        // Eliminar del árbol
+                        treeModel.removeNodeFromParent(selectedNode);
+                        updateUI();
+
+                        // Guardar el estado del sistema
+                        saveSystemState();    
+                    }else{
+                        Directorio parentDir = (Directorio) parentFSNode.getNode();
+                        
+                        // Eliminar del sistema de archivos
+                        if (fsNode.isDirectory()) {
+                            // Si es un directorio, eliminamos recursivamente
+                            fileSystem.deleteDirectory((Directorio)fsNode.getNode(), parentDir);
+                        } else {
+                            // Si es un archivo, lo eliminamos directamente
+                            Archivo archivo = (Archivo) fsNode.getNode();
+                            fileSystem.deleteFile(archivo, parentDir);
+                            fileColorMap.remove(getFilePath(archivo, parentDir));
+                        }
+
+                        // Eliminar del árbol
+                        treeModel.removeNodeFromParent(selectedNode);
+                        updateUI();
+
+                        // Guardar el estado del sistema
+                        saveSystemState();
                     }
-                    
-                    // Eliminar del árbol
-                    treeModel.removeNodeFromParent(selectedNode);
-                    updateUI();
-                    
-                    // Guardar el estado del sistema
-                    saveSystemState();
                 }
             }
         });
