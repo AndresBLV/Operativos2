@@ -493,6 +493,7 @@ public class FileSystemFrame extends JFrame {
                     if (fsNode.isDirectory()) {
                         Directorio dir = (Directorio) fsNode.getNode();
                         dir.setName(newName);
+                        AuditLogger.log("RENAME_DIRECTORY", "Nombre de directorio cambiado: " + newName, "Administrador");                        
                     } else {
                         Archivo archivo = (Archivo) fsNode.getNode();
 
@@ -505,6 +506,7 @@ public class FileSystemFrame extends JFrame {
 
                         // Asignar el color al nuevo path
                         fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
+                        AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");
                     }
 
                     fsNode.setName(newName);
@@ -513,8 +515,6 @@ public class FileSystemFrame extends JFrame {
 
                     // Guardar el estado del sistema
                     saveSystemState();
-                    AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");
-
                 }else{
                     Directorio parentDir = (Directorio) parentFSNode.getNode();
                     // Verificar duplicados en archivos
@@ -545,6 +545,7 @@ public class FileSystemFrame extends JFrame {
                     if (fsNode.isDirectory()) {
                         Directorio dir = (Directorio) fsNode.getNode();
                         dir.setName(newName);
+                        AuditLogger.log("RENAME_DIRECTORY", "Nombre de directorio cambiado: " + newName, "Administrador");                                       
                     } else {
                         Archivo archivo = (Archivo) fsNode.getNode();
 
@@ -557,6 +558,7 @@ public class FileSystemFrame extends JFrame {
 
                         // Asignar el color al nuevo path
                         fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
+                        AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");                    
                     }
 
                     fsNode.setName(newName);
@@ -565,7 +567,6 @@ public class FileSystemFrame extends JFrame {
 
                     // Guardar el estado del sistema
                     saveSystemState();
-                    AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");                    
                 }
             }
         });
@@ -604,11 +605,13 @@ public class FileSystemFrame extends JFrame {
                         if (fsNode.isDirectory()) {
                             // Si es un directorio, eliminamos recursivamente
                             fileSystem.deleteDirectory((Directorio)fsNode.getNode(), parentDir);
+                            AuditLogger.log("DELETE_DIRECTORY", "Directorio eliminado: " + fsNode.getName(), "Administrador");                        
                         } else {
                             // Si es un archivo, lo eliminamos directamente
                             Archivo archivo = (Archivo) fsNode.getNode();
                             fileSystem.deleteFile(archivo, parentDir);
                             fileColorMap.remove(getFilePath(archivo, parentDir));
+                            AuditLogger.log("DELETE_FILE", "Archivo eliminado: " + fsNode.getName(), "Administrador");                        
                         }
 
                         // Eliminar del árbol
@@ -617,7 +620,6 @@ public class FileSystemFrame extends JFrame {
 
                         // Guardar el estado del sistema
                         saveSystemState();
-                        AuditLogger.log("DELETE_FILE", "Archivo eliminado: " + fsNode.getName(), "Administrador");                        
                     }else{
                         Directorio parentDir = (Directorio) parentFSNode.getNode();
                         
@@ -625,11 +627,13 @@ public class FileSystemFrame extends JFrame {
                         if (fsNode.isDirectory()) {
                             // Si es un directorio, eliminamos recursivamente
                             fileSystem.deleteDirectory((Directorio)fsNode.getNode(), parentDir);
+                            AuditLogger.log("DELETE_DIRECTORY", "Direcctorio eliminado: " + fsNode.getName(), "Administrador");                                                
                         } else {
                             // Si es un archivo, lo eliminamos directamente
                             Archivo archivo = (Archivo) fsNode.getNode();
                             fileSystem.deleteFile(archivo, parentDir);
                             fileColorMap.remove(getFilePath(archivo, parentDir));
+                            AuditLogger.log("DELETE_FILE", "Archivo eliminado: " + fsNode.getName(), "Administrador");                                                
                         }
 
                         // Eliminar del árbol
@@ -638,7 +642,6 @@ public class FileSystemFrame extends JFrame {
 
                         // Guardar el estado del sistema
                         saveSystemState();
-                        AuditLogger.log("DELETE_FILE", "Archivo eliminado: " + fsNode.getName(), "Administrador");                                                
                     }
                 }
             }
@@ -653,7 +656,7 @@ public class FileSystemFrame extends JFrame {
                 if (isAdminMode) {
                     AuditLogger.log("CHANGE_MODE", "Modo cambiado: administrador", "Usuario");                        
                 }else{
-                    AuditLogger.log("CHANGE_MODE", "Modo cambiado: usuario", "Administrador");                        
+                    AuditLogger.log("CHANGE_MODE", "Modo cambiado: usuario", "Usuario");                        
                 }
             }
         };

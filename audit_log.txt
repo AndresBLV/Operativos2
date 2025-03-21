@@ -1,3 +1,17 @@
 [2025-03-20 22:38:35] [CHANGE_MODE] [Administrador] Modo cambiado: usuario
 [2025-03-20 22:38:48] [CHANGE_MODE] [Usuario] Modo cambiado: administrador
 [2025-03-20 22:38:55] [CREATE_FILE] [Administrador] Archivo creado: Hola
+[2025-03-20 22:44:16] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-20 22:44:35] [CHANGE_MODE] [Administrador] Modo cambiado: usuario
+[2025-03-20 22:50:43] [CHANGE_MODE] [Usuario] Modo cambiado: usuario
+[2025-03-20 22:51:05] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-20 22:51:11] [DELETE_FILE] [Administrador] Archivo eliminado: Amarillo
+[2025-03-20 22:52:09] [CREATE_DIRECTORY] [Administrador] Directorio creado: Hola
+[2025-03-20 22:52:14] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-20 22:52:20] [RENAME_FILE] [Administrador] Nombre de archivo cambiado: Azul
+[2025-03-20 22:52:32] [DELETE_FILE] [Administrador] Archivo eliminado: Azul
+[2025-03-20 22:52:36] [DELETE_DIRECTORY] [Administrador] Directorio eliminado: Hola
+[2025-03-20 22:55:43] [CREATE_FILE] [Administrador] Archivo creado: Azul
+[2025-03-20 22:55:49] [RENAME_FILE] [Administrador] Nombre de archivo cambiado: Amarillo
+[2025-03-20 22:55:56] [CREATE_DIRECTORY] [Administrador] Directorio creado: Hola
+[2025-03-20 22:56:01] [RENAME_DIRECTORY] [Administrador] Nombre de direcctorio cambiado: Chao
