@@ -3,6 +3,7 @@ package Vista;
 import Class.ArchivoInfo;
 import Class.FileAllocationTableModel;
 import Class.Archivo;
+import Class.AuditLogger;
 import Class.Bloque;
 import Class.Directorio;
 import Class.FileSystem;
@@ -249,6 +250,8 @@ public class FileSystemFrame extends JFrame {
 
                         // Guardar el estado del sistema
                         saveSystemState();
+                        // Lógica para crear el archivo...
+                        AuditLogger.log("CREATE_FILE", "Archivo creado: " + fileName, "Administrador");
                     } 
                 }else{
                     Directorio directorio = (Directorio) fsNode.getNode();
@@ -315,6 +318,7 @@ public class FileSystemFrame extends JFrame {
 
                         // Guardar el estado del sistema
                         saveSystemState();
+                        AuditLogger.log("CREATE_FILE", "Archivo creado: " + fileName, "Administrador");                        
                     }
                 }
             }
@@ -387,6 +391,8 @@ public class FileSystemFrame extends JFrame {
 
                     // Guardar el estado del sistema
                     saveSystemState();
+                    AuditLogger.log("CREATE_DIRECTORY", "Directorio creado: " + dirName, "Administrador");
+                    
                 }else{
                     // Verificar si ya existe un directorio con ese nombre
                     Directorio parentDir = (Directorio) fsNode.getNode();
@@ -422,6 +428,8 @@ public class FileSystemFrame extends JFrame {
 
                     // Guardar el estado del sistema
                     saveSystemState();
+                    AuditLogger.log("CREATE_DIRECTORY", "Directorio creado: " + dirName, "Administrador");
+
                 }
             }
         });
@@ -505,6 +513,8 @@ public class FileSystemFrame extends JFrame {
 
                     // Guardar el estado del sistema
                     saveSystemState();
+                    AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");
+
                 }else{
                     Directorio parentDir = (Directorio) parentFSNode.getNode();
                     // Verificar duplicados en archivos
@@ -555,6 +565,7 @@ public class FileSystemFrame extends JFrame {
 
                     // Guardar el estado del sistema
                     saveSystemState();
+                    AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");                    
                 }
             }
         });
@@ -605,7 +616,8 @@ public class FileSystemFrame extends JFrame {
                         updateUI();
 
                         // Guardar el estado del sistema
-                        saveSystemState();    
+                        saveSystemState();
+                        AuditLogger.log("DELETE_FILE", "Archivo eliminado: " + fsNode.getName(), "Administrador");                        
                     }else{
                         Directorio parentDir = (Directorio) parentFSNode.getNode();
                         
@@ -626,6 +638,7 @@ public class FileSystemFrame extends JFrame {
 
                         // Guardar el estado del sistema
                         saveSystemState();
+                        AuditLogger.log("DELETE_FILE", "Archivo eliminado: " + fsNode.getName(), "Administrador");                                                
                     }
                 }
             }
@@ -637,6 +650,11 @@ public class FileSystemFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 isAdminMode = adminMode.isSelected();
                 updateButtonStates();
+                if (isAdminMode) {
+                    AuditLogger.log("CHANGE_MODE", "Modo cambiado: administrador", "Usuario");                        
+                }else{
+                    AuditLogger.log("CHANGE_MODE", "Modo cambiado: usuario", "Administrador");                        
+                }
             }
         };
         adminMode.addActionListener(modeListener);
