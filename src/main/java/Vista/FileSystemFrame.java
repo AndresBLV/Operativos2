@@ -167,6 +167,7 @@ public class FileSystemFrame extends JFrame {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "Por favor seleccione un directorio",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    AuditLogger.log("ERROR", "Por favor seleccione un directorio", "Administrador");
                     return;
                 }
                 
@@ -175,6 +176,7 @@ public class FileSystemFrame extends JFrame {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "No se puede crear un archivo dentro de un archivo",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    AuditLogger.log("ERROR", "No se puede crear un archivo dentro de un archivo", "Administrador");
                     return;
                 }
                 
@@ -193,6 +195,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un archivo con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un archivo con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -204,6 +207,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un directorio con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un directorio con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -223,6 +227,7 @@ public class FileSystemFrame extends JFrame {
                         JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                 "Por favor ingrese un número entero positivo",
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        AuditLogger.log("ERROR", "Por favor ingrese un número entero positivo", "Administrador");
                         return;
                     }
 
@@ -232,6 +237,8 @@ public class FileSystemFrame extends JFrame {
                                 "No hay suficiente espacio en disco. Disponible: " 
                                         + fileSystem.getAvailableBlocks() + " bloques",
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        AuditLogger.log("ERROR", "No hay suficiente espacio en disco. Disponible: " 
+                                        + fileSystem.getAvailableBlocks() + " bloques", "Administrador");
                         return;
                     }
 
@@ -261,6 +268,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un archivo con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un archivo con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -272,6 +280,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un directorio con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un directorio con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -291,6 +300,7 @@ public class FileSystemFrame extends JFrame {
                         JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                 "Por favor ingrese un número entero positivo",
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        AuditLogger.log("ERROR", "Por favor ingrese un número entero positivo", "Administrador");
                         return;
                     }
 
@@ -300,6 +310,8 @@ public class FileSystemFrame extends JFrame {
                                 "No hay suficiente espacio en disco. Disponible: " 
                                         + fileSystem.getAvailableBlocks() + " bloques",
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        AuditLogger.log("ERROR", "No hay suficiente espacio en disco. Disponible: " 
+                                        + fileSystem.getAvailableBlocks() + " bloques", "Administrador");
                         return;
                     }
 
@@ -339,6 +351,7 @@ public class FileSystemFrame extends JFrame {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "Por favor seleccione un directorio",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    AuditLogger.log("ERROR", "Por favor seleccione un directorio", "Administrador");                        
                     return;
                 }
                 
@@ -347,6 +360,7 @@ public class FileSystemFrame extends JFrame {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "No se puede crear un directorio dentro de un archivo",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    AuditLogger.log("ERROR", "No se puede crear un directorio dentro de un archivo", "Administrador");                                            
                     return;
                 }
                 
@@ -365,6 +379,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un directorio con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un directorio con ese nombre", "Administrador");                                                                
                             return;
                         }
                     }
@@ -376,6 +391,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un archivo con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un archivo con ese nombre", "Administrador");                                                                                            
                             return;
                         }
                     }
@@ -402,6 +418,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un directorio con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un directorio con ese nombre", "Administrador");                                                                
                             return;
                         }
                     }
@@ -413,6 +430,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un archivo con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un archivo con ese nombre", "Administrador");                                                                                            
                             return;
                         }
                     }
@@ -449,6 +467,7 @@ public class FileSystemFrame extends JFrame {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "Seleccione un archivo o directorio para renombrar",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    AuditLogger.log("ERROR", "Seleccione un archivo o directorio para renombrar", "Administrador");
                     return;
                 }
                 
@@ -473,6 +492,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un archivo con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un archivo con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -485,6 +505,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un directorio con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un directorio con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -492,10 +513,12 @@ public class FileSystemFrame extends JFrame {
                     // Renombrar el nodo
                     if (fsNode.isDirectory()) {
                         Directorio dir = (Directorio) fsNode.getNode();
+                        String dirName = dir.getNmae();
                         dir.setName(newName);
-                        AuditLogger.log("RENAME_DIRECTORY", "Nombre de directorio cambiado: " + newName, "Administrador");                        
+                        AuditLogger.log("RENAME_DIRECTORY", "Nombre de directorio" +dirName +" cambiado a: " + newName, "Administrador");                        
                     } else {
                         Archivo archivo = (Archivo) fsNode.getNode();
+                        String fileName = archivo.getName();
 
                         // Guardar el color antes de renombrar
                         String oldPath = getFilePath(archivo, parentDir);
@@ -506,7 +529,7 @@ public class FileSystemFrame extends JFrame {
 
                         // Asignar el color al nuevo path
                         fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
-                        AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");
+                        AuditLogger.log("RENAME_FILE", "Nombre de archivo "+ fileName+ " cambiado a: " + newName, "Administrador");
                     }
 
                     fsNode.setName(newName);
@@ -525,6 +548,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un archivo con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un archivo con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -537,6 +561,7 @@ public class FileSystemFrame extends JFrame {
                             JOptionPane.showMessageDialog(FileSystemFrame.this, 
                                     "Ya existe un directorio con ese nombre",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                            AuditLogger.log("ERROR", "Ya existe un directorio con ese nombre", "Administrador");
                             return;
                         }
                     }
@@ -544,10 +569,12 @@ public class FileSystemFrame extends JFrame {
                     // Renombrar el nodo
                     if (fsNode.isDirectory()) {
                         Directorio dir = (Directorio) fsNode.getNode();
+                        String dirName = dir.getNmae();
                         dir.setName(newName);
-                        AuditLogger.log("RENAME_DIRECTORY", "Nombre de directorio cambiado: " + newName, "Administrador");                                       
+                        AuditLogger.log("RENAME_DIRECTORY", "Nombre de directorio" +dirName +" cambiado a: " + newName, "Administrador");                                                                                   
                     } else {
                         Archivo archivo = (Archivo) fsNode.getNode();
+                        String fileName = archivo.getName();
 
                         // Guardar el color antes de renombrar
                         String oldPath = getFilePath(archivo, parentDir);
@@ -558,7 +585,7 @@ public class FileSystemFrame extends JFrame {
 
                         // Asignar el color al nuevo path
                         fileColorMap.put(getFilePath(archivo, parentDir), fileColor);
-                        AuditLogger.log("RENAME_FILE", "Nombre de archivo cambiado: " + newName, "Administrador");                    
+                        AuditLogger.log("RENAME_FILE", "Nombre de archivo "+ fileName+ " cambiado a: " + newName, "Administrador");
                     }
 
                     fsNode.setName(newName);
@@ -586,6 +613,7 @@ public class FileSystemFrame extends JFrame {
                     JOptionPane.showMessageDialog(FileSystemFrame.this, 
                             "Seleccione un archivo o directorio para eliminar",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    AuditLogger.log("ERROR", "Seleccione un archivo o directorio para eliminar", "Administrador");
                     return;
                 }
                 
@@ -753,6 +781,7 @@ public class FileSystemFrame extends JFrame {
             writer.write("{ \"message\": \"Sistema guardado\" }");
         } catch (IOException e) {
             System.err.println("Error al guardar el estado del sistema: " + e.getMessage());
+            AuditLogger.log("ERROR", "Error al guardar el estado del sistema: " + e.getMessage(), "Administrador");
         }
     }
     
@@ -762,6 +791,7 @@ public class FileSystemFrame extends JFrame {
             // Por simplicidad, este código no implementa la funcionalidad completa
         } catch (IOException e) {
             System.err.println("No se encontró estado guardado del sistema o error al cargar: " + e.getMessage());
+            AuditLogger.log("ERROR", "No se encontró estado guardado del sistema o error al cargar: " + e.getMessage(), "Administrador");
         }
     }
 }

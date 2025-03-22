@@ -15,3 +15,6 @@
 [2025-03-20 22:55:49] [RENAME_FILE] [Administrador] Nombre de archivo cambiado: Amarillo
 [2025-03-20 22:55:56] [CREATE_DIRECTORY] [Administrador] Directorio creado: Hola
 [2025-03-20 22:56:01] [RENAME_DIRECTORY] [Administrador] Nombre de direcctorio cambiado: Chao
+[2025-03-22 11:10:41] [CREATE_FILE] [Administrador] Archivo creado: Hola
+[2025-03-22 11:10:47] [RENAME_FILE] [Administrador] Nombre de archivo Hola cambiado a: Hola
+[2025-03-22 11:15:00] [ERROR] [Administrador] Por favor seleccione un directorio
