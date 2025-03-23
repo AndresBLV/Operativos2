@@ -77,4 +77,14 @@ public class Lista<T> {
         }
         System.out.println("null");
     }
+    public boolean contains(String dato) {
+        Nodo actual = cabeza;
+        while (actual != null) {
+            if (actual.getDato().equals(dato)) {
+                return true;
+            }
+            actual = actual.getSiguiente();
+        }
+        return false;
+    }
 }

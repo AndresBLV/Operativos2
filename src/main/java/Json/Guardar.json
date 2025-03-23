@@ -1,0 +1,32 @@
+{
+  "root": {
+    "name": "root",
+    "list": [
+      {
+        "directorio": {
+          "name": "hola",
+          "list": [
+            {
+              "archivo": {
+                "name": "hola",
+                "length": 4
+              }
+            },
+            {
+              "archivo": {
+                "name": "adios",
+                "length": 4
+              }
+            },
+            {
+              "archivo": {
+                "name": "Amarillo",
+                "length": 2
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

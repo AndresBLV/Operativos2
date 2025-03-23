@@ -18,3 +18,27 @@
 [2025-03-22 11:10:41] [CREATE_FILE] [Administrador] Archivo creado: Hola
 [2025-03-22 11:10:47] [RENAME_FILE] [Administrador] Nombre de archivo Hola cambiado a: Hola
 [2025-03-22 11:15:00] [ERROR] [Administrador] Por favor seleccione un directorio
+[2025-03-22 20:58:50] [CREATE_FILE] [Administrador] Archivo creado: Archivo
+[2025-03-22 20:59:28] [DELETE_FILE] [Administrador] Archivo eliminado: Archivo
+[2025-03-22 23:26:43] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-22 23:27:03] [ERROR] [Administrador] Seleccione un archivo o directorio para eliminar
+[2025-03-22 23:36:10] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-22 23:38:39] [DELETE_DIRECTORY] [Administrador] Directorio eliminado: hola
+[2025-03-22 23:48:38] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 00:14:23] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 00:17:17] [CREATE_FILE] [Administrador] Archivo creado: Ah
+[2025-03-23 00:25:52] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 00:34:07] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 00:37:56] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 00:43:54] [CHANGE_MODE] [Usuario] Modo cambiado: usuario
+[2025-03-23 00:43:55] [CHANGE_MODE] [Usuario] Modo cambiado: usuario
+[2025-03-23 00:43:56] [CHANGE_MODE] [Usuario] Modo cambiado: administrador
+[2025-03-23 01:08:12] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 01:08:15] [SAVEDATA] [Administrador] Sistema guardado de forma exitosa
+[2025-03-23 01:12:53] [CREATE_FILE] [Administrador] Archivo creado: Amarillo
+[2025-03-23 01:12:57] [SAVEDATA] [Administrador] Sistema guardado de forma exitosa
+[2025-03-23 11:48:57] [CHANGE_MODE] [Usuario] Modo cambiado: usuario
+[2025-03-23 11:48:58] [CHANGE_MODE] [Usuario] Modo cambiado: administrador
+[2025-03-23 11:50:05] [CHANGE_MODE] [Usuario] Modo cambiado: usuario
+[2025-03-23 11:51:17] [CHANGE_MODE] [Usuario] Modo cambiado: usuario
+[2025-03-23 11:53:00] [CHANGE_MODE] [Usuario] Modo cambiado: usuario

@@ -1,0 +1,18 @@
+{
+    "root": {
+        "directorio": [
+            { 
+                "archivo": {
+                    "name": "hola",
+                    "length": 4
+                }
+            },
+            { 
+                "archivo": {
+                    "name": "adios",
+                    "length": 4
+                }
+            }
+        ]
+    }
+}
